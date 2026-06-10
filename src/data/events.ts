@@ -1,8 +1,17 @@
+export type EventTypeColor =
+  | "blue"
+  | "green"
+  | "yellow"
+  | "red"
+  | "purple"
+  | "gray";
+
 export type EventosAcademicos = {
   id: number | string;
   title: string;
   date: string;
-  type: "Admisiones" | "Clases" | "Exámenes" | "Feriado" | "General";
+  type: string;
+  typeColor: EventTypeColor;
   description: string;
 };
 

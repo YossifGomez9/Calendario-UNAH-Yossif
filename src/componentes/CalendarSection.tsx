@@ -9,6 +9,8 @@ import EventCard from "./EventCard";
 
 type CalendarSectionProps = {
   events?: EventosAcademicos[];
+  loadStatus?: "success" | "fallback" | "empty";
+  loadMessage?: string;
 };
 
 const ITEMS_PER_PAGE = 6;
@@ -22,6 +24,8 @@ function normalizeText(value: string) {
 
 export default function CalendarSection({
   events = [],
+  loadStatus = "success",
+  loadMessage,
 }: CalendarSectionProps) {
   const [search, setSearch] = useState("");
   const [selectedType, setSelectedType] = useState("Todos");
@@ -71,6 +75,9 @@ export default function CalendarSection({
     currentPage * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE,
   );
+
+  const activeFilters =
+    search.trim() !== "" || selectedType !== "Todos" || selectedDate !== "";
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -132,13 +139,12 @@ export default function CalendarSection({
   const renderPagination = (className = "") => {
     return (
       <div className={`flex w-full justify-center ${className}`}>
-        <div className="flex items-center gap-3 rounded-lg bg-[#183972] px-4 py-3 text-white shadow-lg">
+        <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
           <Button
             type="button"
             onClick={previousPage}
             disabled={currentPage === 0}
-            variant="ghost"
-            className="h-10 rounded-lg px-3 text-base font-bold text-white hover:bg-yellow-300 hover:text-[#183972] disabled:opacity-40"
+            className="h-9 rounded-full px-3 text-lg font-black text-[#183972] hover:bg-[#183972] hover:text-white disabled:opacity-40"
             aria-label="Página anterior"
           >
             ‹
@@ -148,7 +154,7 @@ export default function CalendarSection({
             item === "..." ? (
               <span
                 key={`ellipsis-${index}`}
-                className="flex h-10 min-w-10 items-center justify-center text-lg font-bold text-white"
+                className="flex h-9 min-w-8 items-center justify-center text-sm font-black text-slate-400"
               >
                 ...
               </span>
@@ -157,12 +163,10 @@ export default function CalendarSection({
                 key={item}
                 type="button"
                 onClick={() => setCurrentPage(item - 1)}
-                variant="ghost"
-                className={`h-10 min-w-10 rounded-lg px-3 text-base font-bold transition-all ${
-                  currentPage + 1 === item
-                    ? "bg-yellow-400 text-[#183972] hover:bg-yellow-300 hover:text-[#183972]"
-                    : "text-white hover:bg-yellow-300 hover:text-[#183972]"
-                }`}
+                className={`h-9 min-w-9 rounded-full px-3 text-sm font-black transition-all ${currentPage + 1 === item
+                    ? "bg-[#183972] text-white hover:bg-[#102a58]"
+                    : "text-[#183972] hover:bg-yellow-300 hover:text-[#183972]"
+                  }`}
                 aria-label={`Ir a la página ${item}`}
               >
                 {item}
@@ -174,8 +178,7 @@ export default function CalendarSection({
             type="button"
             onClick={nextPage}
             disabled={currentPage === totalPages - 1}
-            variant="ghost"
-            className="h-10 rounded-lg px-3 text-base font-bold text-white hover:bg-yellow-300 hover:text-[#183972] disabled:opacity-40"
+            className="h-9 rounded-full px-3 text-lg font-black text-[#183972] hover:bg-[#183972] hover:text-white disabled:opacity-40"
             aria-label="Página siguiente"
           >
             ›
@@ -188,23 +191,33 @@ export default function CalendarSection({
   return (
     <section
       id="calendario"
-      className="relative w-full overflow-hidden bg-slate-100 px-4 py-20 sm:px-8 lg:px-12"
+      className="w-full bg-[#183972] px-4 py-20 sm:px-8 lg:px-12"
     >
-      <div className="absolute inset-0 bg-[#183972]" />
+      <div className="mx-auto w-full max-w-[1500px]">
 
-      <div className="relative z-10 mx-auto w-full max-w-[1500px]">
-        <div className="mb-12 text-center">
-          <span className="rounded-md bg-blue-100 px-5 py-2 text-base font-bold text-blue-900 shadow-sm">
+
+
+        <div className="mb-12 flex flex-col items-center justify-center text-center">
+          <span className="inline-flex rounded-md bg-blue-100 px-5 py-2 text-base font-bold text-blue-900 shadow-sm">
             Vista general
           </span>
 
-          <h2 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
-            Calendario académico UNAH
-          </h2>
+          <div className="mt-5 flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-8">
+            <h2 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
+              Calendario académico UNAH
+            </h2>
+
+            <img
+              src="/puma-unah.png"
+              alt="Mascota UNAH"
+              className="h-28 w-auto -translate-y-4 object-contain opacity-95 drop-shadow-2xl sm:h-32 lg:h-30"
+            />
+          </div>
         </div>
 
-        <Card className="mx-auto rounded-lg border-slate-200 bg-white/95 p-6 shadow-2xl backdrop-blur-sm sm:p-8 lg:p-10">
-          <div className="mb-8 w-full rounded-md bg-[#183972] p-7 text-white">
+
+        <Card className="mx-auto rounded-2xl border-0 bg-white p-5 shadow-xl sm:p-8 lg:p-10">
+          <div className="mb-8 rounded-2xl bg-[#183972] p-5">
             <div className="flex w-full flex-col gap-4 lg:flex-row">
               <div className="relative w-full lg:flex-[2]">
                 <span className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-[#183972]">
@@ -228,7 +241,7 @@ export default function CalendarSection({
                   value={search}
                   onChange={(event) => handleSearchChange(event.target.value)}
                   placeholder="Buscar por evento, categoría o fecha..."
-                  className="h-14 w-full rounded-md border-2 border-yellow-400 bg-white pl-12 pr-4 text-base font-semibold text-[#183972] placeholder:text-slate-400 focus:ring-yellow-300"
+                  className="h-14 w-full rounded-xl border border-slate-200 bg-white pl-12 pr-4 text-base font-semibold text-[#183972] shadow-sm placeholder:text-slate-400 focus:border-yellow-400 focus:ring-yellow-300"
                 />
               </div>
 
@@ -236,7 +249,7 @@ export default function CalendarSection({
                 <select
                   value={selectedType}
                   onChange={(event) => handleFilterChange(event.target.value)}
-                  className="h-14 w-full rounded-md border-2 border-yellow-400 bg-white px-4 text-base font-semibold text-[#183972] outline-none focus:ring-2 focus:ring-yellow-300"
+                  className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-base font-semibold text-[#183972] shadow-sm outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300"
                   aria-label="Filtrar eventos por tipo"
                 >
                   {eventTypes.map((type) => (
@@ -252,7 +265,7 @@ export default function CalendarSection({
                   type="date"
                   value={selectedDate}
                   onChange={(event) => handleDateChange(event.target.value)}
-                  className="h-14 w-full rounded-md border-2 border-yellow-400 bg-white px-4 text-base font-semibold text-[#183972] focus:ring-yellow-300"
+                  className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-base font-semibold text-[#183972] shadow-sm focus:border-yellow-400 focus:ring-yellow-300"
                   aria-label="Filtrar eventos por fecha"
                 />
               </div>
@@ -261,7 +274,8 @@ export default function CalendarSection({
                 <Button
                   type="button"
                   onClick={clearFilters}
-                  className="h-14 w-full rounded-md bg-yellow-400 px-4 text-base font-bold text-[#183972] hover:bg-yellow-300"
+                  disabled={!activeFilters}
+                  className="h-14 w-full rounded-xl bg-yellow-400 px-4 font-black text-[#183972] shadow-sm hover:bg-yellow-300 disabled:opacity-50"
                 >
                   Limpiar
                 </Button>
@@ -269,13 +283,30 @@ export default function CalendarSection({
             </div>
           </div>
 
+          {loadStatus !== "success" && (
+            <div className="mb-8 rounded-xl bg-yellow-50 px-5 py-4 text-sm font-bold text-[#183972]">
+              {loadMessage ??
+                "No se pudieron cargar los eventos desde Payload. Revisa el backend."}
+            </div>
+          )}
+
+          <div className="mb-8 flex flex-col gap-2 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-bold text-[#183972]">
+              {filteredEvents.length} eventos encontrados
+            </p>
+
+            <p className="text-sm font-semibold text-slate-500">
+              Página {currentPage + 1} de {totalPages}
+            </p>
+          </div>
+
           {renderPagination("mb-8")}
 
           {visibleEvents.length > 0 ? (
-            <div className="overflow-hidden rounded-md">
+            <div className="overflow-hidden rounded-xl">
               <div
                 key={`${selectedType}-${search}-${selectedDate}-${currentPage}`}
-                className="grid gap-x-6 gap-y-8 py-6 transition-all duration-300 ease-in-out md:grid-cols-2 xl:grid-cols-3"
+                className="grid auto-rows-fr gap-x-6 gap-y-8 py-6 transition-all duration-300 ease-in-out md:grid-cols-2 xl:grid-cols-3"
               >
                 {visibleEvents.map((event) => (
                   <EventCard
@@ -283,14 +314,21 @@ export default function CalendarSection({
                     title={event.title}
                     date={event.date}
                     type={event.type}
+                    typeColor={event.typeColor}
                     description={event.description}
                   />
                 ))}
               </div>
             </div>
           ) : (
-            <div className="rounded-md border border-dashed border-slate-300 bg-slate-50 p-10 text-center text-base font-semibold text-slate-500">
-              No se encontraron eventos con esa búsqueda o filtro.
+            <div className="rounded-2xl bg-slate-50 p-10 text-center">
+              <h3 className="text-2xl font-black text-[#183972]">
+                No se encontraron eventos
+              </h3>
+
+              <p className="mt-3 text-base font-semibold text-slate-500">
+                Cambia la búsqueda, limpia los filtros o registra nuevos eventos.
+              </p>
             </div>
           )}
 

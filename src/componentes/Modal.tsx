@@ -29,11 +29,10 @@ export default function WelcomeModal() {
         <p className="mt-4 text-base leading-7 text-slate-600">
           Encuentra las fechas mas importantes
         </p>
-
+<br />
         <Button
-          type="button"
           onClick={() => setOpen(false)}
-          className="mt-6 rounded-md bg-[#183972] px-6 py-3 font-bold text-white hover:bg-[#102a58]"
+          className="bg-yellow-400 px-5 py-2 font-semibold text-[#183972] hover:bg-yellow-300 rounded-lg"
         >
           Entendido
         </Button>

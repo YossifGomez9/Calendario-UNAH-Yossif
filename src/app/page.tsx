@@ -12,19 +12,19 @@ export default async function Home() {
     <main className="min-h-screen w-full overflow-x-hidden bg-slate-100">
       <Navbar />
 
-      <section className="grid min-h-[calc(100vh-64px)] w-full grid-cols-1 overflow-hidden lg:grid-cols-2">
-        <div className="min-h-[calc(100vh-64px)] w-full overflow-hidden">
-          <Header />
-        </div>
+      <section className="grid h-[500px] w-full grid-cols-1 overflow-hidden lg:grid-cols-2">
+  <div className="flex h-full w-full items-center justify-center overflow-hidden">
+    <Header />
+  </div>
 
-        <div className="min-h-[calc(100vh-64px)] w-full overflow-hidden">
-          <Carrucel />
-        </div>
-      </section>
+  <div className="flex h-full w-full items-center justify-center overflow-hidden">
+    <Carrucel />
+  </div>
+</section>
 
       <CalendarSection events={academicEvents} />
 
       <Footer />
     </main>
-  );
-}
+  ); 
+} 

@@ -1,40 +1,42 @@
-# Calendario Académico Interactivo UNAH
+# Frontend - Calendario Académico UNAH
 
-Proyecto web desarrollado con Next.js, React, TypeScript, Tailwind CSS y componentes tipo shadcn/ui.
+Este es el frontend del calendario académico interactivo UNAH. Está desarrollado con Next.js, Tailwind CSS y componentes de shadcn/ui.
 
-## Objetivo
+# Funciones principales
 
-Mostrar un calendario académico interactivo de la UNAH con búsqueda, filtros, paginación y vista de detalle de eventos.
+* Muestra eventos académicos en cards.
+* Consume datos desde Payload CMS.
+* Permite buscar eventos.
+* Permite filtrar por tipo de evento.
+* Permite filtrar por fecha.
+* Muestra detalle de cada evento.
+* Incluye estados de carga y error.
+* Diseño responsive.
 
-## Tecnologías
+# Variable de entorno
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
+Crear el archivo:
 
-## Instalación frontend
+.env.local
 
-```bash
-cd Proyecto-Yossif
+Con el contenido:
+
+NEXT_PUBLIC_PAYLOAD_URL=http://127.0.0.1:3001
+
+# Ejecutar localmente
+
 npm install
 npm run dev
-```
 
-Luego abre:
+El frontend se abre en:
 
-```txt
 http://localhost:3000
-```
 
-## Funcionalidades actuales
+# Archivos importantes
 
-- Encabezado con navbar.
-- Header y carrusel colocados mitad y mitad en la pantalla de inicio.
-- Calendario académico con búsqueda.
-- Filtro por tipo de evento.
-- Filtro por fecha.
-- Paginación superior e inferior.
-- 6 eventos por página.
-- Modal de detalle de evento.
+src/app/page.tsx
+src/app/loading.tsx
+src/app/error.tsx
+src/componentes/CalendarSection.tsx
+src/componentes/EventCard.tsx
+src/lib/getAcademicEvents.ts

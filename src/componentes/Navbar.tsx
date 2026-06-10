@@ -12,14 +12,14 @@ export default function Navbar() {
 
         <div className="flex justify-center">
           <h2 className="text-center text-lg font-bold text-gray-200 sm:text-xl">
-            Calendario Académico UNAH
+            Calendario Académico UNAH 
           </h2>
         </div>
 
         <div className="hidden justify-end sm:flex">
           <a
             href="#calendario"
-            className="rounded-full bg-white px-4 py-1.5 text-xs font-bold text-[#183972] transition hover:bg-yellow-300"
+            className="bg-yellow-400 px-5 py-1 font-semibold text-[#183972] hover:bg-yellow-300 rounded-lg"
           >
             Ver calendario
           </a>

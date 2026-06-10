@@ -115,19 +115,19 @@ export default function CarrucelComponent() {
                 />
               </div>
 
-              <div className="relative z-10 flex h-full min-h-[calc(100vh-64px)] w-full items-center px-10">
+              <div className="relative z-10 flex h-full min-h-[calc(100vh-64px)] w-full items-center justify-center px-20 text-center md:px-24 lg:px-28">
                 <div
-                  className={`max-w-2xl transform text-white slide-content transition-all duration-700 ${
+                  className={`max-w-2xl transform rounded-xl bg-[#183972]/65 p-8 text-white shadow-2xl backdrop-blur-sm slide-content transition-all duration-700 ${
                     currentSlide === index
-                      ? "translate-x-0 opacity-100"
-                      : "translate-x-10 opacity-0"
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-6 opacity-0"
                   }`}
                 >
-                  <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+                  <h2 className="mb-4 text-4xl font-black md:text-5xl">
                     {slide.title}
                   </h2>
 
-                  <p className="mb-8 text-xl md:text-2xl">
+                  <p className="mb-0 text-lg font-medium leading-8 md:text-xl">
                     {slide.description}
                   </p>
                 </div>
@@ -138,7 +138,7 @@ export default function CarrucelComponent() {
           <button
             type="button"
             onClick={prev}
-            className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all hover:bg-black/70 md:h-12 md:w-12"
+            className="absolute left-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all hover:bg-black/70 md:h-12 md:w-12"
             aria-label="Diapositiva anterior"
           >
             <svg
@@ -160,7 +160,7 @@ export default function CarrucelComponent() {
           <button
             type="button"
             onClick={next}
-            className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all hover:bg-black/70 md:h-12 md:w-12"
+            className="absolute right-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all hover:bg-black/70 md:h-12 md:w-12"
             aria-label="Siguiente diapositiva"
           >
             <svg
@@ -179,7 +179,7 @@ export default function CarrucelComponent() {
             </svg>
           </button>
 
-          <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 space-x-2">
+          <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 space-x-2">
             {slides.map((slide, index) => (
               <button
                 key={slide.title}
